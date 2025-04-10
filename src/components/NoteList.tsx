@@ -1,4 +1,5 @@
 import { useNotes, useNotesDispatch } from "../context/NotesContext";
+import { Note } from "../types/Note";
 
 function NoteList({ sortBy }) {
   const notes = useNotes();
@@ -6,12 +7,12 @@ function NoteList({ sortBy }) {
   let sortedNotes = notes;
   if (sortBy === "earliest")
     sortedNotes = [...notes].sort(
-      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+      (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     ); // a -b  => a > b ? 1 : -1
 
   if (sortBy === "latest")
     sortedNotes = [...notes].sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     ); // b -a  => a > b ? -1 : 1
 
   if (sortBy === "completed")
@@ -30,7 +31,7 @@ function NoteList({ sortBy }) {
 
 export default NoteList;
 
-function NoteItem({ note }) {
+function NoteItem({ note } : {note: Note[]}) {
   const dispatch = useNotesDispatch();
 
   const options = {
