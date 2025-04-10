@@ -1,12 +1,12 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNotesDispatch } from "../context/NotesContext";
 
 function AddNewNote() {
   const dispatch = useNotesDispatch();
-  const [title, setTtile] = useState("");
-  const [description, setDescription] = useState("");
+  const [title, setTtile] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!title || !description) return null;

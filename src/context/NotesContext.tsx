@@ -1,22 +1,19 @@
 import { createContext, ReactNode, useContext, useReducer } from "react";
+import { Note } from "../types/Note";
 
-type Note = {
-  id: number;
-  title: string;
-  description: string;
-  completed: boolean;
-  createdAt: string;
-}
+// Note Type 
+// in the foler types 
 
+// Action Type
 type Action = 
-{ type: "add"; payload: Note} 
-| {type: "delete"; payload: number} 
-| {type : "complete"; payload: number}
+  { type: "add"; payload: Note} | { type: "delete"; payload: number} | { type : "complete"; payload: number}
 
+// Notes Provider "Props" Type
 type NotesProviderProps = {
   children: ReactNode;
 }
 
+// NotesContext and NotesDispatchContext Types 
 type NotesContextType = Note[];
 type NotesDispatchContextType = React.Dispatch<Action>
 

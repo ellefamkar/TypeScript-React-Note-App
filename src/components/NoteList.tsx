@@ -1,12 +1,18 @@
 import { useNotes, useNotesDispatch } from "../context/NotesContext";
 import { Note } from "../types/Note";
+import { SortByType } from "../types/SortBy";
 
-function NoteList({ sortBy }) {
+type NoteListProps = {
+  sortBy : SortByType
+}
+
+function NoteList({ sortBy } : NoteListProps) {
   const notes = useNotes();
 
   let sortedNotes = notes;
   if (sortBy === "earliest")
     sortedNotes = [...notes].sort(
+      // added getTime to it to change to time stamp and be numbers
       (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
     ); // a -b  => a > b ? 1 : -1
 
@@ -31,10 +37,14 @@ function NoteList({ sortBy }) {
 
 export default NoteList;
 
-function NoteItem({ note } : {note: Note[]}) {
+type NoteItemProps = { 
+  note: Note
+}
+
+function NoteItem({ note } : NoteItemProps) {
   const dispatch = useNotesDispatch();
 
-  const options = {
+  const options : Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -55,8 +65,8 @@ function NoteItem({ note } : {note: Note[]}) {
           </button>
           <input
             type="checkbox"
-            name={note.id}
-            id={note.id}
+            name={String(note.id)}
+            id={String(note.id)}
             value={note.id}
             checked={note.completed}
             onChange={(e) => {
